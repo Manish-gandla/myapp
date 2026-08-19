@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: YOUR_DOCKERHUB_USERNAME/myapp
+  IMAGE_NAME: manishgandla/myapp
 
 jobs:
   # 1. Run tests on every push and PR
