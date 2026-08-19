@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       image_tag:
-        description: "Docker image tag to deploy"
+        description: "Git short-SHA tag to roll back to"
         required: true
         type: string
 
@@ -34,30 +34,4 @@ jobs:
               -f docker-compose.prod.yml \
               up -d
 
-            docker image prune -fname: Rollback
-
-on:
-  workflow_dispatch:
-    inputs:
-      image_tag:
-        description: 'Git short-SHA tag to roll back to (e.g. a1b2c3d)'
-        required: true
-
-env:
-  IMAGE_NAME: YOUR_DOCKERHUB_USERNAME/myapp
-
-jobs:
-  rollback:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Roll back on EC2
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd /home/ubuntu/myapp
-            echo "IMAGE_TAG=${{ github.event.inputs.image_tag }}" > .env.deploy
-            docker pull ${{ env.IMAGE_NAME }}:${{ github.event.inputs.image_tag }}
-            docker compose --env-file .env.deploy -f docker-compose.prod.yml up -d
+            docker image prune -f
