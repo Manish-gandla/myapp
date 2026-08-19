@@ -1,0 +1,13 @@
+{
+  "name": "myapp",
+  "version": "1.0.0",
+  "description": "Simple app for demonstrating a production-ready CI/CD pipeline",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node src/server.test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
